@@ -1,28 +1,20 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { listPersons } from '../services/PersonService'
 
 const ListPersonComponent = () => {
 
-    const dummyData = [{
-        "id": 1,
-        "firstName": "Ashenafi",
-        "lastName": "Duressa",
-        "email": "adure@gmail.com",
-        "phoneNumber": 2406652217
-    }, {
-        "id": 2,
-        "firstName": "Firework",
-        "lastName": "Duressa",
-        "email": "fdure@gmail.com",
-        "phoneNumber": 2406652220
-    },{
-        "id": 3,
-        "firstName": "Bereket",
-        "lastName": "Duressa",
-        "email": "bdure@gmail.com",
-        "phoneNumber": 2406652240
-    }
+    const [persons, setPersons] = useState([])
 
-    ]
+    useEffect(() => {
+        listPersons().then((response) => {
+            setPersons(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    })
+
+
+
   return (
     <div className='container'>
         <h2 className='text-center'>List of Registered Personels</h2>
@@ -38,7 +30,7 @@ const ListPersonComponent = () => {
             </thead>
             <tbody>
                 {
-                    dummyData.map(person => 
+                    persons.map(person => 
                         <tr key={person.id}>
                             <td>{person.id}</td>
                             <td>{person.firstName}</td>
